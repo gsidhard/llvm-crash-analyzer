@@ -71,6 +71,11 @@ public:
   ///     attach operation.
   Status AttachWaitProcess(llvm::StringRef process_name, bool include_existing);
 
+  Status ReadCoreFile(const std::string &core_file,
+                      const std::string sysroot,
+                      const std::string module_path,
+                      const std::string solib_path,
+                      llvm::ArrayRef<llvm::StringRef> Arguments);
   // NativeProcessProtocol::NativeDelegate overrides
   void InitializeDelegate(NativeProcessProtocol *process) override;
 

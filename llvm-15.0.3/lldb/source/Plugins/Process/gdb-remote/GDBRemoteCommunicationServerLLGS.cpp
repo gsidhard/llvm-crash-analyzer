@@ -48,6 +48,7 @@
 
 #include "ProcessGDBRemote.h"
 #include "ProcessGDBRemoteLog.h"
+#include "CoreGDBRemote.h"
 #include "lldb/Utility/StringExtractorGDBRemote.h"
 
 using namespace lldb;
@@ -341,6 +342,25 @@ Status GDBRemoteCommunicationServerLLGS::LaunchProcess() {
          m_process_launch_info.GetArguments().GetArgumentAtIndex(0),
          m_current_process->GetID());
 
+  return Status();
+}
+
+Status GDBRemoteCommunicationServerLLGS::ReadCoreFile(
+                                    const std::string &core_file,
+                                    const std::string sysroot,
+                                    const std::string module_path,
+				    const std::string solib_path,
+                                    llvm::ArrayRef<llvm::StringRef> Arguments) {
+  llvm::StringRef progname = Arguments[0];
+  llvm::StringRef solib_search_path(solib_path);
+
+  lldb::crash_analyzer::CoreFile corefile(core_file, progname, sysroot,
+                                          module_path);
+  if (!corefile.read(solib_search_path)) {
+    Status error;
+    error.SetErrorString("Unable to read core file.");
+    return error;
+  }
   return Status();
 }
 

@@ -32,6 +32,7 @@ add_lldb_library(lldbPluginProcessGDBRemote PLUGIN
   ProcessGDBRemote.cpp
   ProcessGDBRemoteLog.cpp
   ThreadGDBRemote.cpp
+  CoreGDBRemote.cpp
 
   LINK_LIBS
     lldbBreakpoint

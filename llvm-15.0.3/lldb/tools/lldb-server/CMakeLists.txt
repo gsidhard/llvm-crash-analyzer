@@ -54,6 +54,7 @@ add_lldb_tool(lldb-server
       lldbPluginInstructionMIPS
       lldbPluginInstructionMIPS64
       ${LLDB_SYSTEM_LIBS}
+      liblldb
 
     LINK_COMPONENTS
       Option
